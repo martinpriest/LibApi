@@ -45,8 +45,8 @@ class GetBooks
         $paginationParams = ['per_page', 'page'];
         $pagination = collect($request->only($paginationParams));
         $filters = collect($request->except($paginationParams));
-        $books = $this->handle($filters, $pagination);
+        $booksPage = $this->handle($filters, $pagination);
 
-        return response($books);
+        return response($booksPage);
     }
 }
