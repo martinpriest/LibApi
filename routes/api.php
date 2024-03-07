@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\Books\GetBook;
+use App\Actions\Books\GetBooks;
 use App\Actions\Customers\BorrowBook;
 use App\Actions\Customers\CreateCustomer;
 use App\Actions\Customers\DeleteCustomer;
@@ -32,6 +33,7 @@ Route::prefix('/customers')->name('customers.')->group(function () {
 });
 
 Route::prefix('/books')->name('books.')->group(function () {
+    Route::get('/', GetBooks::class)->name('find.all');
     Route::get('/{book}', GetBook::class)->name('find.one');
 });
 
