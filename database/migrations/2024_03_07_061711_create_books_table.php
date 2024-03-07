@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-
             $table->string('status')->default('AVAILABLE')->comment('Book availability status');
             $table->string('title');
             $table->string('author');
