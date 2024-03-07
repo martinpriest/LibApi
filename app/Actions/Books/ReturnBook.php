@@ -21,9 +21,9 @@ class ReturnBook
             $this->handle($book, $customer);
 
             return response(['message' => __('books.return_successfull')]);
-        } catch (\App\Exceptions\CustomerIsNotBookOwnerException $th) {
+        } catch (\App\Exceptions\CustomerIsNotBookOwnerException) {
             return response(['message' => __('customers.no_book_permission')], 404);
-        } catch (\Exception $th) {
+        } catch (\Exception) {
             return response(['message' => __('errors.common.something_went_wrong')], 404);
         }
     }

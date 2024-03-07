@@ -21,9 +21,9 @@ class BorrowBook
             $this->handle($book, $customer);
 
             return response(['message' => __('books.borrow_successfull')]);
-        } catch (\App\Exceptions\BookIsNotAvailableException $th) {
+        } catch (\App\Exceptions\BookIsNotAvailableException) {
             return response(['message' => __('books.not_available')], 404);
-        } catch (\Exception $th) {
+        } catch (\Exception) {
             return response(['message' => __('errors.common.something_went_wrong')], 404);
         }
     }

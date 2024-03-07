@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Api\Customers;
+namespace Tests\Api\Books;
 
 use App\Models\Book;
 use Illuminate\Foundation\Testing\RefreshDatabase;
