@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\Customers\CreateCustomer;
+use App\Actions\Customers\GetCustomer;
 use App\Actions\Customers\GetCustomers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/customers')->name('customers.')->group(function () {
     Route::get('/', GetCustomers::class)->name('find.all');
+    Route::get('/{customer}', GetCustomer::class)->name('find.one');
     Route::post('/', CreateCustomer::class)->name('create');
 });
 
