@@ -35,4 +35,26 @@ class Book extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    public function borrowBy(Customer $customer): bool
+    {
+        if (! $this->isAvailable()) {
+            return false;
+        }
+        $this->customer_id = $customer->id;
+        $this->status = BookStatus::BORROWED;
+
+        return $this->save();
+    }
+
+    public function returnBy(Customer $customer): bool
+    {
+        if ($this->customer_id !== $customer->id) {
+            return false;
+        }
+        $this->customer_id = null;
+        $this->status = BookStatus::AVAILABLE;
+
+        return $this->save();
+    }
 }

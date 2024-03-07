@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Api\Customers;
+namespace Tests\Api\Books;
 
 use App\Enums\BookStatus;
 use App\Models\Book;
@@ -17,7 +17,7 @@ class ReturnBookTest extends TestCase
         $ownerCustomer = Customer::factory()->create();
         $book = Book::factory()->for($ownerCustomer)->create();
 
-        $pathToTest = route('customers.update.return', [
+        $pathToTest = route('books.update.return', [
             'customer' => $ownerCustomer->id,
             'book' => $book->id,
         ]);
@@ -37,7 +37,7 @@ class ReturnBookTest extends TestCase
         $book = Book::factory()->borrowedBy($ownerCustomer->id)->create();
         $foreignCustomer = Customer::factory()->create();
 
-        $pathToTest = route('customers.update.return', [
+        $pathToTest = route('books.update.return', [
             'customer' => $foreignCustomer->id,
             'book' => $book->id,
         ]);

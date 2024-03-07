@@ -1,13 +1,13 @@
 <?php
 
+use App\Actions\Books\BorrowBook;
 use App\Actions\Books\GetBook;
 use App\Actions\Books\GetBooks;
-use App\Actions\Customers\BorrowBook;
+use App\Actions\Books\ReturnBook;
 use App\Actions\Customers\CreateCustomer;
 use App\Actions\Customers\DeleteCustomer;
 use App\Actions\Customers\GetCustomer;
 use App\Actions\Customers\GetCustomers;
-use App\Actions\Customers\ReturnBook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,14 +27,13 @@ Route::prefix('/customers')->name('customers.')->group(function () {
     Route::get('/{customer}', GetCustomer::class)->name('find.one');
     Route::post('/', CreateCustomer::class)->name('create');
     Route::delete('/{customer}', DeleteCustomer::class)->name('delete');
-
-    Route::put('/{customer}/borrow/{book}', BorrowBook::class)->name('update.borrow');
-    Route::put('/{customer}/return/{book}', ReturnBook::class)->name('update.return');
 });
 
 Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/', GetBooks::class)->name('find.all');
     Route::get('/{book}', GetBook::class)->name('find.one');
+    Route::put('/{book}/borrow/{customer}', BorrowBook::class)->name('update.borrow');
+    Route::put('/{book}/return/{customer}', ReturnBook::class)->name('update.return');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

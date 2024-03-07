@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Api\Customers;
+namespace Tests\Api\Books;
 
 use App\Enums\BookStatus;
 use App\Models\Book;
@@ -17,7 +17,7 @@ class BorrowBookTest extends TestCase
         $customer = Customer::factory()->create();
         $book = Book::factory()->available()->create();
 
-        $pathToTest = route('customers.update.borrow', [$customer->id, $book->id]);
+        $pathToTest = route('books.update.borrow', ['customer' => $customer->id, 'book' => $book->id]);
         $response = $this->put($pathToTest);
 
         $response->assertOk();
@@ -29,10 +29,11 @@ class BorrowBookTest extends TestCase
 
     public function test_borrow_book_action_with_success_should_update_book_status_to_borrowed()
     {
+        Book::factory(5)->available()->create();
         $customer = Customer::factory()->create();
         $book = Book::factory()->available()->create();
 
-        $pathToTest = route('customers.update.borrow', [$customer->id, $book->id]);
+        $pathToTest = route('books.update.borrow', ['customer' => $customer->id, 'book' => $book->id]);
         $this->put($pathToTest);
 
         $this->assertDatabaseHas('books', [
@@ -47,7 +48,7 @@ class BorrowBookTest extends TestCase
         $customer = Customer::factory()->create();
         $book = Book::factory()->borrowed()->create();
 
-        $pathToTest = route('customers.update.borrow', [$customer->id, $book->id]);
+        $pathToTest = route('books.update.borrow', ['customer' => $customer->id, 'book' => $book->id]);
         $response = $this->put($pathToTest);
 
         $response->assertNotFound();
@@ -58,7 +59,7 @@ class BorrowBookTest extends TestCase
         $customer = Customer::factory()->create();
         $book = Book::factory()->notAvailable()->create();
 
-        $pathToTest = route('customers.update.borrow', [$customer->id, $book->id]);
+        $pathToTest = route('books.update.borrow', ['customer' => $customer->id, 'book' => $book->id]);
         $response = $this->put($pathToTest);
 
         $response->assertNotFound();
@@ -69,7 +70,7 @@ class BorrowBookTest extends TestCase
         $customer = Customer::factory()->create();
         $book = Book::factory()->notAvailable()->create();
 
-        $pathToTest = route('customers.update.borrow', [$customer->id, $book->id]);
+        $pathToTest = route('books.update.borrow', ['customer' => $customer->id, 'book' => $book->id]);
         $this->put($pathToTest);
 
         $this->assertDatabaseHas('books', [
@@ -84,7 +85,7 @@ class BorrowBookTest extends TestCase
         $customer = Customer::factory()->create();
         $book = Book::factory()->borrowed()->create();
 
-        $pathToTest = route('customers.update.borrow', [$customer->id, $book->id + 1]);
+        $pathToTest = route('books.update.borrow', ['customer' => $customer->id, 'book' => $book->id + 1]);
         $response = $this->put($pathToTest);
 
         $response->assertNotFound();
@@ -95,7 +96,7 @@ class BorrowBookTest extends TestCase
         $customer = Customer::factory()->create();
         $book = Book::factory()->available()->create();
 
-        $pathToTest = route('customers.update.borrow', [$customer->id + 1, $book->id]);
+        $pathToTest = route('books.update.borrow', ['customer' => $customer->id + 1, 'book' => $book->id]);
         $response = $this->put($pathToTest);
 
         $response->assertNotFound();
