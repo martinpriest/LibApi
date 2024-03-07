@@ -56,4 +56,14 @@ class BookFactory extends Factory
             ]
         );
     }
+
+    public function borrowedBy(int $customerId)
+    {
+        return $this->state(
+            fn () => [
+                'status' => BookStatus::BORROWED->value,
+                'customer_id' => $customerId,
+            ]
+        );
+    }
 }

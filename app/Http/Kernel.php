@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'customer_has_not_borrowed_books' => \App\Http\Middleware\EnsureCustomerHasNoBorrowedBooks::class,
         'book_is_available' => \App\Http\Middleware\EnsureBookIsAvailable::class,
+        'customer_is_book_owner' => \App\Http\Middleware\EnsureCustomerIsBookOwner::class,
     ];
 }

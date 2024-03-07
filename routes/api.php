@@ -5,6 +5,7 @@ use App\Actions\Customers\CreateCustomer;
 use App\Actions\Customers\DeleteCustomer;
 use App\Actions\Customers\GetCustomer;
 use App\Actions\Customers\GetCustomers;
+use App\Actions\Customers\ReturnBook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,7 @@ Route::prefix('/customers')->name('customers.')->group(function () {
     Route::delete('/{customer}', DeleteCustomer::class)->name('delete');
 
     Route::put('/{customer}/borrow/{book}', BorrowBook::class)->name('update.borrow');
+    Route::put('/{customer}/return/{book}', ReturnBook::class)->name('update.return');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
