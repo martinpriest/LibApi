@@ -17,10 +17,14 @@ class BorrowBook
 
     public function asController(Book $book, Customer $customer)
     {
-        if ($this->handle($book, $customer)) {
-            return response(['message' => __('customers.borrow_successfull')]);
-        }
+        try {
+            $this->handle($book, $customer);
 
-        return response(['message' => __('errors.common.something_went_wrong')], 404);
+            return response(['message' => __('books.borrow_successfull')]);
+        } catch (\App\Exceptions\BookIsNotAvailableException $th) {
+            return response(['message' => __('books.not_available')], 404);
+        } catch (\Exception $th) {
+            return response(['message' => __('errors.common.something_went_wrong')], 404);
+        }
     }
 }

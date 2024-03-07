@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\BookStatus;
+use App\Exceptions\BookIsNotAvailableException;
+use App\Exceptions\CustomerIsNotBookOwnerException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -39,7 +41,7 @@ class Book extends Model
     public function borrowBy(Customer $customer): bool
     {
         if (! $this->isAvailable()) {
-            return false;
+            throw new BookIsNotAvailableException;
         }
         $this->customer_id = $customer->id;
         $this->status = BookStatus::BORROWED;
@@ -50,7 +52,7 @@ class Book extends Model
     public function returnBy(Customer $customer): bool
     {
         if ($this->customer_id !== $customer->id) {
-            return false;
+            throw new CustomerIsNotBookOwnerException;
         }
         $this->customer_id = null;
         $this->status = BookStatus::AVAILABLE;

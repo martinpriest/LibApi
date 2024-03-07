@@ -17,10 +17,14 @@ class ReturnBook
 
     public function asController(Book $book, Customer $customer)
     {
-        if ($this->handle($book, $customer)) {
-            return response(['message' => __('customers.return_successfull')]);
-        }
+        try {
+            $this->handle($book, $customer);
 
-        return response(['message' => __('errors.common.something_went_wrong')], 404);
+            return response(['message' => __('books.return_successfull')]);
+        } catch (\App\Exceptions\CustomerIsNotBookOwnerException $th) {
+            return response(['message' => __('customers.no_book_permission')], 404);
+        } catch (\Exception $th) {
+            return response(['message' => __('errors.common.something_went_wrong')], 404);
+        }
     }
 }
