@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Books\GetBook;
 use App\Actions\Customers\BorrowBook;
 use App\Actions\Customers\CreateCustomer;
 use App\Actions\Customers\DeleteCustomer;
@@ -28,6 +29,10 @@ Route::prefix('/customers')->name('customers.')->group(function () {
 
     Route::put('/{customer}/borrow/{book}', BorrowBook::class)->name('update.borrow');
     Route::put('/{customer}/return/{book}', ReturnBook::class)->name('update.return');
+});
+
+Route::prefix('/books')->name('books.')->group(function () {
+    Route::get('/{book}', GetBook::class)->name('find.one');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
